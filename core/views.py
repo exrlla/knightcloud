@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 # from django.http import HttpResponse
@@ -11,8 +11,9 @@ import random
 
 @login_required(login_url='signin')
 def index(request):
+    print('loading index...')
     user_object = User.objects.get(username=request.user.username)
-    user_profile = Profile.objects.get(user=user_object)
+    user_profile = get_object_or_404(Profile, user=user_object)
 
     user_following_list = []
     feed = []
@@ -74,7 +75,7 @@ def upload(request):
 @login_required(login_url='signin')
 def search(request):
     user_object = User.objects.get(username=request.user.username)
-    user_profile = Profile.objects.get(user=user_object)
+    user_profile = get_object_or_404(Profile, user=user_object)
 
     if request.method == 'POST':
         username = request.POST['username']
@@ -224,7 +225,7 @@ def signup(request):
         return render(request, 'signup.html')
 
 def signin(request):
-    
+    print('signing...')
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -233,15 +234,16 @@ def signin(request):
 
         if user is not None:
             auth.login(request, user)
-            return redirect('/')
+            print('redirecting to index...')
+            return redirect('index')
         else:
             messages.info(request, 'Credentials Invalid')
             return redirect('signin')
 
     else:
-        return render(request, 'signin')
+        return render(request, 'signin.html')
 
 @login_required(login_url='signin')
 def logout(request):
     auth.logout(request)
-    return redirect('signin')
+    return redirect('signin.html')
