@@ -12,7 +12,7 @@
 ===============*/
 html,body{
 	font-family: calibri;
-    background: #fff;
+    background: #e9e9e9;
 }
 
 .bio{
@@ -26,7 +26,7 @@ body {
     padding: 0;
     overflow-x: hidden;
     color: #545454;
-    background: #b0b3b8;
+    background: #dadde1;
 }
 
 p {

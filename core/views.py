@@ -70,7 +70,7 @@ def upload(request):
 
         return redirect('/')
     else:
-        return redirect('/')
+        return render(request, 'upload.html')
 
 @login_required(login_url='signin')
 def search(request):
@@ -246,4 +246,4 @@ def signin(request):
 @login_required(login_url='signin')
 def logout(request):
     auth.logout(request)
-    return redirect('signin.html')
+    return redirect('signin')
